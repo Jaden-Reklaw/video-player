@@ -6,7 +6,7 @@ const playBtn = document.getElementById('play-btn');
 const volumeIcon = document.getElementById('volume-icon');
 const volumeRange = document.querySelector('.volume-range');
 const volumeBar = document.querySelector('.volume-bar');
-const currentTime = document.querySelector('.time-elasped');
+const currentTime = document.querySelector('.time-elapsed');
 const duration = document.querySelector('.time-duration');
 const fullscreenBtn = document.querySelector('.fullscreen');
 
@@ -30,7 +30,6 @@ const togglePlay = () => {
 // On Video End, show play button icon
 video.addEventListener('ended', showPlayIcon);
 
-
 // Progress Bar ---------------------------------- //
 
 // Update progress bar as video plays
@@ -50,6 +49,17 @@ const updateProgress = () => {
     duration.textContent = `${displayTime(video.duration)}`;
 }
 
+// Click on progress bar to change position in video
+const setProgress = (e) => {
+    //Get percentage using the size of the progrss bar offsets
+    //offsetWidth is the entire length offsetx is where you clicked
+    const newTime = (e.offsetX / progressRange.offsetWidth);
+    //Change where the progress bar is
+    progressBar.style.width = `${newTime}%`;
+    //Set time of the video of the percentage
+    video.currentTime = newTime * video.duration;
+}
+
 // Volume Controls --------------------------- //
 
 
@@ -65,3 +75,4 @@ playBtn.addEventListener('click', togglePlay);
 video.addEventListener('click', togglePlay);
 video.addEventListener('timeupdate', updateProgress);
 video.addEventListener('canplay', updateProgress);
+progressRange.addEventListener('click', setProgress);
