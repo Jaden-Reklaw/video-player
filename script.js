@@ -34,8 +34,20 @@ video.addEventListener('ended', showPlayIcon);
 // Progress Bar ---------------------------------- //
 
 // Update progress bar as video plays
+const displayTime = (time) => {
+    const min = Math.floor(time / 60);
+    let sec = Math.floor(time % 60);
+    sec = sec > 9 ? sec : `0${sec}`;
+    return `${min}:${sec}`;
+}
+
+// Update progress bar as video plays
 const updateProgress = () => {
     progressBar.style.width = `${(video.currentTime/video.duration) * 100}%`;
+    // Displays the current time of the video playing
+    currentTime.textContent = `${displayTime(video.currentTime)}`;
+    // Displays the duration time of the video
+    duration.textContent = `${displayTime(video.duration)}`;
 }
 
 // Volume Controls --------------------------- //
